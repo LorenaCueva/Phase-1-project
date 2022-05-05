@@ -4,16 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Using Materialize  -->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="stylesheets/map.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="javascripts/map.js" defer></script> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <title>Brew On</title>
 </head>
 <body>
-    <div id="main"></div>
+    <!-- check back color, letter color, height of nav, logo image -->
+    <div class="navbar-fixed" height="20px">
+    <nav class='#ffca28 amber lighten-1'>
+        <div class="nav-wrapper container">
+          <div class="brand-logo">Logo</div>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="#" id="map-link"><i class="material-icons left">map</i>Map</a></li>
+            <!-- <li><a href="badges.html"><i class="material-icons right">view_module</i>Link with Right Icon</a></li> -->
+          </ul>
+        </div>
+      </nav>
+    </div>    
+   
+<!-- check map -->
+<!-- Using map from https://clickablemapmaker.com/  -->
+<div id="main" class="container center-align">
+    <h3>Where to Brew?</h3>
+    <!-- <object id="map" type="text/html" data="map.html" width="800px" height="600px"></object> -->
+</div>
 
+<!-- <script src="javascripts/map.js"></script> -->
 <script src="javascripts/index.js"></script>
+
+
 </body>
 </html>
