@@ -47,3 +47,8 @@ Favorites -> list
 I googled and found out that this is the way to get current location. I just need to set the starting address to Current+Location. I don't need Longitude and Latitude, and that's what I wanted.
 
 https://maps.google.com?saddr=Current+Location&daddr=43.12345,-76.12345
+
+
+
+
+
