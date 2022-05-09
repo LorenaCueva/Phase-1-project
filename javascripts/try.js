@@ -1,5 +1,5 @@
 /* Global Variables */
-
+const  color = "teal lighten-2";
 
 
 /* Node Getters */
@@ -8,16 +8,13 @@ const mapDiv = () => document.getElementById('map');
 const mapLink = () => document.getElementById('map-link');
 const delBtn = (id) => document.getElementById(id);
 const breweryCard = (id) => document.getElementById(`b${id}`);
-const editBtn = (id) => document.getElementById(`edit-btn${id}`);
-const title = () => document.getElementById('title');
-const cancelEditBtn = (id) => document.getElementById(`cancel-edit${id}`);
+const editBtn = (id) => document.getElementById(`edit-${id}`);
 
 /* Event Listeners */
 
 const mapLinkClickEvent = () => {
     mapLink().addEventListener('click', e => {
          resetMain();
-         title().innerText = "Where to brew?";
          mapVisible(true)});
 }
 
@@ -29,34 +26,6 @@ const deleteBtnEvent = (btn) => {
     })
 }
 
-
-const editBtnEvent = (btn,id) => {
-    btn.addEventListener('click', e => {
-        e.preventDefault();
-        const form  = document.getElementById(`form${id}`);
-        if(form.food.value !== "" && form.pet.value !== "" && form.rating.value){
-            form.reset();
-            var elem = document.querySelector(`#edit${id}.modal`);
-            M.Modal.getInstance(elem).close();
-        }
-    
-
-    })
-}
-
-const cancelEditEvent = (btn,id) => {
-    btn.addEventListener('click', e => {
-        e.preventDefault();
-        const form  = document.getElementById(`form${id}`);
-            form.reset();
-            var elem = document.querySelector(`#edit${id}.modal`);
-            M.Modal.getInstance(elem).close();
-        }
-    )
-   
-
-}
-
 /* ???? */
 
 function clickMap(id){
@@ -66,147 +35,148 @@ const initializeComponents = () => {
     var elems = document.querySelectorAll('.collapsible');
     M.Collapsible.init(elems);
     var elem = document.querySelectorAll('.modal');
-    M.Modal.init(elem, {dismissible:false});
-    var el = document.querySelectorAll('select');
-    M.FormSelect.init(el);
-    var e = document.querySelectorAll('select');
-    M.FormSelect.init(e);
+    M.Modal.init(elem);
 }
 
-const collapsibleListItem = (content) => {
-    const item = document.createElement('li');
-    item.className = "collection-item"
-    const cont = document.createElement('h6');
-    cont.innerText = cont;
-    item.append(content);
-    return item;
-}
-
-const createCollapsibleCard = (brewery, icon) => {
+const createCollapsibleCard = (title, id, icon) => {
     const ul = document.createElement('ul');
-    ul.className = "collapsible popout";
-    ul.id = `b${brewery.id}`;
+    ul.class = "collapsible popout";
+    ul.id = id;
     const li = document.createElement('li');
-
     const div1 = document.createElement('div');
-    div1.className = `collapsible-header card-panel teal lighten-2`;
+    div1.className = `collapsible-header card-panel ${color}`;
     const i = document.createElement('i');
     i.className = "material-icons large";
     i.innerText = icon;
     const h5 = document.createElement('h5');
-    h5.innerText = brewery.name;
-
+    h5.innerText = title;
     const div2 = document.createElement('div');
-    div2.className = "collapsible-body";
+    div2.class = "collapsible-body";
     const ul2 = document.createElement('ul');
-    ul2.className = "collection left-align";
-    ul2.id= `brewery-content${brewery.id}`;
-
+    ul2.className = "collection left-align"
 
     div2.append(ul2);
-    div1.append(i,h5)
-    li.append(div1,div2);
-    ul.append(li)
+    div1.append(div2);
+    li.append(div1);
+    ul.append(li);
     
     return ul;
 }
 
-const collapsibleItem = (content) => {
-    const item  = document.createElement('li');
-    item.className = "collection-item";
+const collapsibleItem = (content, father) => {
+    const coll = document.createElement('li');
+    coll.className = "collection-item";
     const h = document.createElement('h6');
-    h.innerHTML=content;
-    item.append(h);
-    return item;
+    h.innerText=content;
+    coll.append(h);
+    father.append(coll);
 }
 
-const collapsibleButton = () => {
+// const createButton = (id, text, icon, target) => {
+//     const btn = document.createElement('a');
+//     btn.id = id;
+//     btn.className = "waves-effect waves-light btn modal-trigger";
+//     btn.data-target = target;
+//     btn.innerText = text;
+//     const i = document.createElement('i');
+//     i.className = "material-icons left";
+//     i.innerText = icon;
+//     return btn;
 
+
+//     <a class="waves-effect waves-light btn modal-trigger" data-target="modal${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>
+// }
+
+const createModal = (modalId, yesBtnId, content) => {
+    const div1 = document.createElement('div');
+    div1.id = modalId;
+    div1.class = "modal";
+    const div2 = document.createElement('div');
+    div2.className = "modal-content";
+    const cont = document.createElement('h4');
+    cont.innerText = content;
+    const div3 = document.createElement('div');
+    div3.class = "modal-footer";
+    const a1 = document.createElement('a');
+    a1.class = "modal-close waves-effect waves-green btn-flat";
+    a1.innerText = "No";
+    const a2= document. createElement('a');
+    a2.id = yesBtnId;
+    a2.className = "modal-close waves-effect waves-green btn-flat";
+    a2.innerText = "Yes";
+
+    div3.append(a1, a2)
+    cont.append(div3);
+    div2.append(cont);
+    div1.append(div2);
+
+    return div1;
 }
-
-
 
 //check colors
 const displayFavorite = (brewery) => {
         // console.log(Object.entries(brewery));
     const breweryCard = document.createElement('div');
-    breweryCard.append(createCollapsibleCard(brewery, "star"));
-    mainDiv().append(breweryCard);
-    const content = document.getElementById(`brewery-content${brewery.id}`);
-    content.append(collapsibleItem(`Type: ${brewery.type}`));
-    content.append(collapsibleItem(`Adress: ${brewery.address}`));
-    content.append(collapsibleItem(`Website: <a href=${brewery.website}>${brewery.website}`));
-    content.append(collapsibleItem(`Food: ${brewery.food}`));
-    content.append(collapsibleItem(`Beer Rating: ${brewery.beer_rating}`));
-    content.append(collapsibleItem(`Pet Friendly? ${brewery.pet_friendly}`));
-    content.append(collapsibleItem(`Comments: ${brewery.comments}`));
-    const li = document.createElement('li');
-    li.className = "collection-item right-align";
-    li.innerHTML = ` <a class="waves-effect waves-light btn modal-trigger" data-target="edit${brewery.id}"><i class="material-icons left">edit</i>Edit</a>
-                     <a class="waves-effect waves-light btn modal-trigger" data-target="delete${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>`
-    content.append(li);
+    // const collapsibleCard = createCollapsibleCard(brewery.name, brewery.id, 'star');
+    // collapsibleItem(`Type: ${brewery.type}`, collapsibleCard);
+    // collapsibleItem(`Adress: ${brewery.address}` ,collapsibleCard);
+    // collapsibleItem(`Food: ${brewery.food}`, collapsibleCard);
+    // collapsibleItem(`Beer Rating: ${brewery.beer_rating}`, collapsibleCard);
+    // collapsibleItem(`Comments: ${brewery.comments}`, collapsibleCard);
+    // const li = document.createElement('li');
+    // li.innerHTML = `h6>Website: <a href=${brewery.website}>${brewery.website}</a></h6>`;
+    // collapsibleCard.append(li);
+    // const li2 = document.createElement('li');
+    // li2.className = "collection-item right-align"
+    // li2.innerHTML = `<button id="edit-${brewery.id}" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</button>
+    // <a class="waves-effect waves-light btn modal-trigger" data-target="modal${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>`
+    // collapsibleCard.append(li2);
+    // const popMessage = createModal(brewery.id, brewery.id, `Remove ${brewery.name} from favorites?`)
+    // breweryCard.append(collapsibleCard);
+
+    
     
 
-    const deleteModal = document.createElement('div');
-    deleteModal.id = `delete${brewery.id}`;
-    deleteModal.className = "modal";
-    deleteModal.innerHTML = `
-         <div class="modal-content">
-            <h4>Remove ${brewery.name} from favorites?</h4>
-         </div>
-        <div class="modal-footer">
-             <a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
-             <a href="#!" id="${brewery.id}" class="modal-close waves-effect waves-green btn-flat">Yes</a>
-         </div>
-    </div>`
+    
 
-    const editModal = document.createElement('div');
-    editModal.id = `edit${brewery.id}`;
-    editModal.className = "modal";
-    editModal.innerHTML = `
+
+
+    
+
+
+    breweryCard.innerHTML = `
+    <ul class="collapsible popout" id="b${brewery.id}">
+    <li>
+      <div class="collapsible-header card-panel teal lighten-2"><i class="material-icons large">star</i><h5 id="brewery-name">${brewery.name}</h5></div>
+        <div class="collapsible-body">
+            <ul class="collection left-align">
+                <li class="collection-item"><h6>Type: ${brewery.type}</h6></li>
+                <li class="collection-item"><h6>Adress: ${brewery.address}</h6></li>
+                <li class="collection-item"><h6>Website: <a href=${brewery.website}>${brewery.website}</a></h6></li>
+                <li class="collection-item"><h6>Food: ${brewery.food}</h6></li>
+                <li class="collection-item"><h6>Beer Rating: ${brewery.beer_rating}</h6></li>
+                <li class="collection-item"><h6>Comments: ${brewery.comments}</h6></li>
+                <li class="collection-item right-align">
+                    <button id="edit-${brewery.id}" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</button>
+                    <a class="waves-effect waves-light btn modal-trigger" data-target="modal${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <div id="modal${brewery.id}" class="modal">
     <div class="modal-content">
-      <h5>${brewery.name}</h5>
-      <form action="#" class="left-align" id="form${brewery.id}">
-            <select id="edit-food" name="food">
-            <option value="" disabled selected>Food Available?</option>
-            <option value="Y">Yes</option>
-            <option value="N">No</option>
-            <option value="T">FoodTruck</option>
-          </select>
-            <select id="edit-pet" name="pet">
-            <option value="" disabled selected>Pet Friendly?</option>
-            <option value="Y">Yes</option>
-            <option value="N">No</option>
-          </select>
-          <select id="beer-rating" name="rating">
-            <option value="" disabled selected>Beer Rating:</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-            <div class="input-field">
-            <label for="comments">Comments:</label><br>
-            <textarea id="comments" class="materialize-textarea">${brewery.comments}</textarea>
-          </div>
-          
-        
-         <div class="modal-footer">
-             <button class="waves-effect waves-green btn-flat" id="cancel-edit${brewery.id}">Cancel</button>
-             <button id="edit-btn${brewery.id}" class="waves-effect waves-green btn-flat">Edit</button>
-         </div>
-    </form>
-</div>`
+      <h4>Remove ${brewery.name} from favorites?</h4>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+      <a href="#!" id="${brewery.id}" class="modal-close waves-effect waves-green btn-flat">Yes</a>
+    </div>
+  </div>`
 
-
-    // const delModal = createModal(`delete${brewery.id}`,`${brewery.id}`, `Remove ${brewery.name} from favorites?`);
-    // breweryCard.append(delModal);
-    mainDiv().append(deleteModal, editModal);
-    initializeComponents();
+    console.log(breweryCard);
+    mainDiv().append(breweryCard);
     deleteBtnEvent(delBtn(brewery.id));
-    editBtnEvent(editBtn(brewery.id),brewery.id);
-    cancelEditEvent(cancelEditBtn(brewery.id), brewery.id);
+    initializeComponents();
 
 }
 
@@ -221,7 +191,6 @@ const fillBreweryObject = (brewery) => {
         website:"",
         beer_rating:"",
         food:"",
-        pet_friendly:"",
         comments:""
     }
     breweryObject.id = brewery.id
@@ -229,9 +198,7 @@ const fillBreweryObject = (brewery) => {
     breweryObject.lookup_name = brewery.lookup_name;
     breweryObject.beer_rating = brewery.beer_rating;
     breweryObject.food = brewery.food;
-    breweryObject.pet_friendly = brewery.pet_friendly;
     breweryObject.comments = brewery.comments;
-
     fetchBreweryByName(brewery.lookup_name)
     .then(brewery => {
         breweryObject.type = brewery.brewery_type;
@@ -241,6 +208,8 @@ const fillBreweryObject = (brewery) => {
        displayFavorite(breweryObject)})
     //    console.log(brewery)})
 }
+    
+const setTitle = (name) => {}
 
 
 /* Fetch functions  */
@@ -269,24 +238,28 @@ const deleteFavorite = (id) => {
     .catch(error => window.alert(error.message));
 }
 
+const createSection = (content) => {
+    const section = document.createElement('div');
+   section.class = "divider"
+   section.innerHTML = `   
+   <div class="section">
+     ${content}
+   </div>
+   <div class="divider"></div>`
+   return section
+}
 
 const statePage = (state) => {
     mapVisible(false);
+    stateNameTitle = createSection(`<h4>${state}</h4>`);
+    addButtonSection = createSection(`<div class="row">
+    <div class="col s6"><h5 class="left-align">Your Favorites:</h5></div>`)
 
-title().innerText = state;
-
-//check colors
-   const tabBar = document.createElement('div');
-   tabBar.className = "row";
-   tabBar.innerHTML = `<div class="col s12">
-      <ul class="tabs ">
-        <li class="tab col s3 "><a class ="active">Favorites</a></li>
-        <li class="tab col s3"><a >Breweries</a></li>
-        <li class="tab col s3"><a>Disabled Tab</a></li>
-      </ul>
-    </div>`
+//     <div class="col s6"><h5 class="right-align"><button class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add Favorite</button></h5></div>
+//   </div>
 
 
+  
 
 
 
@@ -294,10 +267,7 @@ title().innerText = state;
 //    divider.class = "divider"
 //    divider.append(stateNameTitle)
 
-   mainDiv().append(tabBar);
-
-   var elems = document.querySelectorAll('.tabs');
-   M.Tabs.init(elems);
+   mainDiv().append(stateNameTitle, addButtonSection);
 
    fetchFavoritesByState(state);
 
@@ -332,4 +302,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMap();
     mapLinkClickEvent();
 })
+
 

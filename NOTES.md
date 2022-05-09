@@ -165,3 +165,35 @@ GEOLOCATION
 
     // var elems = document.querySelectorAll('.collapsible');
     // M.Collapsible.init(elems);
+
+
+
+
+// breweryCard.innerHTML = `
+// <ul class="collapsible popout" id="b${brewery.id}">
+// <li>
+//     <div class="collapsible-header card-panel teal lighten-2">
+//         <i class="material-icons large">star</i>
+//         <h5>${brewery.name}</h5>
+//     </div>
+//     <div class="collapsible-body">
+//         <ul class="collection left-align" id='brewery-content'>
+//             <li class="collection-item"><h6>Type: ${brewery.type}</h6></li>
+//             <li class="collection-item"><h6>Adress: ${brewery.address}</h6></li>
+//             <li class="collection-item"><h6>Website: <a href=${brewery.website}>${brewery.website}</a></h6></li>
+//             <li class="collection-item"><h6>Food: ${brewery.food}</h6></li>
+//             <li class="collection-item"><h6>Beer Rating: ${brewery.beer_rating}</h6></li>
+//             <li class="collection-item"><h6>Pet Friendly? ${brewery.pet_friendly}</h6></li>
+//             <li class="collection-item"><h6>Comments: ${brewery.comments}</h6></li>
+//             <li class="collection-item right-align">
+//                 <a class="waves-effect waves-light btn modal-trigger" data-target="edit${brewery.id}"><i class="material-icons left">edit</i>Edit</a>
+//                 <a class="waves-effect waves-light btn modal-trigger" data-target="delete${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>
+//             </li>
+//         </ul>
+//     </div>
+// </li>
+// </ul>
+
+
+
+    
