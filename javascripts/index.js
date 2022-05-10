@@ -26,22 +26,58 @@ const deleteBtnEvent = (btn) => {
     btn.addEventListener('click', e => {
         deleteFavorite(btn.id)
         .then(breweryCard(btn.id).remove())
+        let elem = document.querySelector(`#delete${btn.id}.modal`);
+        M.Modal.getInstance(elem).destroy();
+        fixScrolling();
     })
 }
 
-
-const editBtnEvent = (btn,id) => {
+const editBtnEvent = (btn,brewery) => {
     btn.addEventListener('click', e => {
         e.preventDefault();
-        const form  = document.getElementById(`form${id}`);
-        if(form.food.value !== "" && form.pet.value !== "" && form.rating.value){
-            form.reset();
-            var elem = document.querySelector(`#edit${id}.modal`);
-            M.Modal.getInstance(elem).close();
-        }
-    
+        const form  = document.getElementById(`form${brewery.id}`);
 
+        if(form.food.value !== " " && form.pet.value !== " " && form.rating.value !== " "){
+            editFavorite(brewery.id, form.food.value, form.pet.value, form.rating.value, form.comments.value)
+            .then(object => {
+
+
+                console.log(object);
+                const content = document.getElementById(`brewery-content${brewery.id}`)
+                content.innerHTML = "";
+                
+                content.append(collapsibleItem(`Type: ${brewery.type}`));
+                content.append(collapsibleItem(`Adress: ${brewery.address}`));
+                content.append(collapsibleItem(`Website: <a href=${brewery.website}>${brewery.website}`));
+                content.append(collapsibleItem(`Food: ${object.food}`));
+                content.append(collapsibleItem(`Beer Rating: ${object.beer_rating}`));
+                content.append(collapsibleItem(`Pet Friendly? ${object.pet_friendly}`));
+                content.append(collapsibleItem(`Comments: ${object.comments}`));
+
+                form.reset();
+                let elem = document.querySelector(`#edit${brewery.id}.modal`);
+                M.Modal.getInstance(elem).close();
+                const newComment = document.getElementById(`comments${brewery.id}`);
+                newComment.innerText = object.comments;
+                let el = document.querySelector(`#edit${object.id}.modal`);
+                M.Modal.init(el);
+                fixScrolling();
+                
+            })           
+            
+        }
+        else window.alert("Please fill all areas")
+        
     })
+}
+
+///fixes no scrolling issues when closing modal
+
+const fixScrolling = () => {
+
+    $('body').css({
+        overflow: 'visible'
+    });
 }
 
 const cancelEditEvent = (btn,id) => {
@@ -53,8 +89,6 @@ const cancelEditEvent = (btn,id) => {
             M.Modal.getInstance(elem).close();
         }
     )
-   
-
 }
 
 /* ???? */
@@ -69,18 +103,8 @@ const initializeComponents = () => {
     M.Modal.init(elem, {dismissible:false});
     var el = document.querySelectorAll('select');
     M.FormSelect.init(el);
-    var e = document.querySelectorAll('select');
-    M.FormSelect.init(e);
 }
 
-const collapsibleListItem = (content) => {
-    const item = document.createElement('li');
-    item.className = "collection-item"
-    const cont = document.createElement('h6');
-    cont.innerText = cont;
-    item.append(content);
-    return item;
-}
 
 const createCollapsibleCard = (brewery, icon) => {
     const ul = document.createElement('ul');
@@ -102,8 +126,13 @@ const createCollapsibleCard = (brewery, icon) => {
     ul2.className = "collection left-align";
     ul2.id= `brewery-content${brewery.id}`;
 
+    const btns = document.createElement('li');
+    btns.className = "collection-item right-align";
+    btns.innerHTML = ` <a class="waves-effect waves-light btn modal-trigger" data-target="edit${brewery.id}"><i class="material-icons left">edit</i>Edit</a>
+                     <a class="waves-effect waves-light btn modal-trigger" data-target="delete${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>`
 
-    div2.append(ul2);
+
+    div2.append(ul2,btns);
     div1.append(i,h5)
     li.append(div1,div2);
     ul.append(li)
@@ -120,15 +149,51 @@ const collapsibleItem = (content) => {
     return item;
 }
 
-const collapsibleButton = () => {
+const createModal = (modalId, yesBtnId, yesBtnName, noBtnId, noBtnName, contentId, content) => {
+    const div1 = document.createElement('div');
+    div1.id = modalId;
+    div1.className = "modal";
+    const div2 = document.createElement('div');
+    div2.className = "modal-content";
+    div2.id = contentId;
+    const cont = document.createElement('h4');
+    cont.innerHTML = content;
+    const div3 = document.createElement('div');
+    div3.className = "modal-footer";
+    const a1 = document.createElement('button');
+    a1.className = "modal-close waves-effect waves-green btn-flat";
+    a1.id = noBtnId;
+    a1.innerText = noBtnName;
+    const a2= document. createElement('button');
+    a2.id = yesBtnId;
+    a2.className = "waves-effect waves-green btn-flat";
+    a2.innerText = yesBtnName;
+   
 
+    div3.append(a1, a2)
+    div2.append(cont);
+    div1.append(div2,div3);
+
+    return div1;
 }
 
-
+const createFormSelect = (sId, sName, options, label) => {
+    const select = document.createElement('select');
+    select.id = sId;
+    select.name = sName;
+    select.innerHTML = `<option value=" " disabled selected>${label}</option>`
+    options.forEach(e=> {
+        const option = document.createElement('option');
+        option.value = e[0];
+        option.innerText = e[1];
+        select.append(option);
+    })
+    return select;
+}
 
 //check colors
 const displayFavorite = (brewery) => {
-        // console.log(Object.entries(brewery));
+
     const breweryCard = document.createElement('div');
     breweryCard.append(createCollapsibleCard(brewery, "star"));
     mainDiv().append(breweryCard);
@@ -140,72 +205,40 @@ const displayFavorite = (brewery) => {
     content.append(collapsibleItem(`Beer Rating: ${brewery.beer_rating}`));
     content.append(collapsibleItem(`Pet Friendly? ${brewery.pet_friendly}`));
     content.append(collapsibleItem(`Comments: ${brewery.comments}`));
-    const li = document.createElement('li');
-    li.className = "collection-item right-align";
-    li.innerHTML = ` <a class="waves-effect waves-light btn modal-trigger" data-target="edit${brewery.id}"><i class="material-icons left">edit</i>Edit</a>
-                     <a class="waves-effect waves-light btn modal-trigger" data-target="delete${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>`
-    content.append(li);
     
 
-    const deleteModal = document.createElement('div');
-    deleteModal.id = `delete${brewery.id}`;
-    deleteModal.className = "modal";
-    deleteModal.innerHTML = `
-         <div class="modal-content">
-            <h4>Remove ${brewery.name} from favorites?</h4>
-         </div>
-        <div class="modal-footer">
-             <a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
-             <a href="#!" id="${brewery.id}" class="modal-close waves-effect waves-green btn-flat">Yes</a>
-         </div>
-    </div>`
-
-    const editModal = document.createElement('div');
-    editModal.id = `edit${brewery.id}`;
-    editModal.className = "modal";
-    editModal.innerHTML = `
-    <div class="modal-content">
-      <h5>${brewery.name}</h5>
-      <form action="#" class="left-align" id="form${brewery.id}">
-            <select id="edit-food" name="food">
-            <option value="" disabled selected>Food Available?</option>
-            <option value="Y">Yes</option>
-            <option value="N">No</option>
-            <option value="T">FoodTruck</option>
-          </select>
-            <select id="edit-pet" name="pet">
-            <option value="" disabled selected>Pet Friendly?</option>
-            <option value="Y">Yes</option>
-            <option value="N">No</option>
-          </select>
-          <select id="beer-rating" name="rating">
-            <option value="" disabled selected>Beer Rating:</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-            <div class="input-field">
-            <label for="comments">Comments:</label><br>
-            <textarea id="comments" class="materialize-textarea">${brewery.comments}</textarea>
-          </div>
-          
-        
-         <div class="modal-footer">
-             <button class="waves-effect waves-green btn-flat" id="cancel-edit${brewery.id}">Cancel</button>
-             <button id="edit-btn${brewery.id}" class="waves-effect waves-green btn-flat">Edit</button>
-         </div>
-    </form>
-</div>`
-
+    const deleteModal = createModal(`delete${brewery.id}`,`${brewery.id}`,"Yes", "" , "No", `delete-${brewery.id}`, `Remove ${brewery.name} from favorites?`);
+    const editModal = createModal(`edit${brewery.id}`, `edit-btn${brewery.id}`, "Edit", `cancel-edit${brewery.id}` ,"Cancel", `edit-content${brewery.id}`, `Edit ${brewery.name}`)
+    
+    const form = document.createElement('form');
+    form.className = "left-align";
+    form.id=`form${brewery.id}`;
+    form.append(createFormSelect("edit-food", "food", [["Yes", "Yes"],["No","No"],["FoodTruck","FoodTruck"]],"Food Available?"))
+    form.append(createFormSelect("edit-pet", "pet",[["Yes", "Yes"],["No", "No"]], "Pet Friendly?"));
+    form.append(createFormSelect("beer-rating", "rating", [["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]],"Beer Rating:"))
+    
+    const comments = document.createElement('div');
+    comments.className ="input-field";
+    const label = document.createElement('label');
+    // label.for = "comments";
+    label.innerText = "Comments:";
+    const textarea = document.createElement('textarea');
+    textarea.id = `comments${brewery.id}`;
+    textarea.name= "comments";
+    textarea.className="materialize-textarea";
+    textarea.innerText = `${brewery.comments}`;
+    comments.append(label,document.createElement('br'),textarea);
+    form.append(comments)
+    
+    
 
     // const delModal = createModal(`delete${brewery.id}`,`${brewery.id}`, `Remove ${brewery.name} from favorites?`);
     // breweryCard.append(delModal);
     mainDiv().append(deleteModal, editModal);
+    document.getElementById(`edit-content${brewery.id}`).append(form);
     initializeComponents();
     deleteBtnEvent(delBtn(brewery.id));
-    editBtnEvent(editBtn(brewery.id),brewery.id);
+    editBtnEvent(editBtn(brewery.id),brewery);
     cancelEditEvent(cancelEditBtn(brewery.id), brewery.id);
 
 }
@@ -239,7 +272,6 @@ const fillBreweryObject = (brewery) => {
         breweryObject.city = brewery.city
         breweryObject.website = brewery.website_url
        displayFavorite(breweryObject)})
-    //    console.log(brewery)})
 }
 
 
@@ -269,6 +301,25 @@ const deleteFavorite = (id) => {
     .catch(error => window.alert(error.message));
 }
 
+const editFavorite = (id, food, pet, rating, comments) => {
+    return fetch(`http://localhost:3000/favorites/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            "food": food,
+            "pet_friendly": pet,
+            "beer_rating": rating,
+            "comments": comments 
+          })
+    })
+    .then(response => response.json())
+    .catch(() => window.alert("There was a problem with the server"))
+}
+
+
 
 const statePage = (state) => {
     mapVisible(false);
@@ -280,12 +331,16 @@ title().innerText = state;
    tabBar.className = "row";
    tabBar.innerHTML = `<div class="col s12">
       <ul class="tabs ">
-        <li class="tab col s3 "><a class ="active">Favorites</a></li>
-        <li class="tab col s3"><a >Breweries</a></li>
+        <li class="tab col s3" id="favorites-tab"><a class ="active">Favorites</a></li>
+        <li class="tab col s3" id="breweries-tab"><a>Breweries</a></li>
         <li class="tab col s3"><a>Disabled Tab</a></li>
       </ul>
     </div>`
 
+    mainDiv().append(tabBar);
+
+    var elems = document.querySelectorAll('.tabs');
+    M.Tabs.init(elems);
 
 
 
@@ -294,10 +349,7 @@ title().innerText = state;
 //    divider.class = "divider"
 //    divider.append(stateNameTitle)
 
-   mainDiv().append(tabBar);
-
-   var elems = document.querySelectorAll('.tabs');
-   M.Tabs.init(elems);
+  
 
    fetchFavoritesByState(state);
 

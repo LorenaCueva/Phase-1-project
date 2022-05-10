@@ -104,6 +104,7 @@ const createModal = (modalId, yesBtnId, content) => {
     a2.id = yesBtnId;
     a2.className = "modal-close waves-effect waves-green btn-flat";
     a2.innerText = "Yes";
+    a2.type="submit";
 
     div3.append(a1, a2)
     cont.append(div3);
@@ -117,22 +118,22 @@ const createModal = (modalId, yesBtnId, content) => {
 const displayFavorite = (brewery) => {
         // console.log(Object.entries(brewery));
     const breweryCard = document.createElement('div');
-    // const collapsibleCard = createCollapsibleCard(brewery.name, brewery.id, 'star');
-    // collapsibleItem(`Type: ${brewery.type}`, collapsibleCard);
-    // collapsibleItem(`Adress: ${brewery.address}` ,collapsibleCard);
-    // collapsibleItem(`Food: ${brewery.food}`, collapsibleCard);
-    // collapsibleItem(`Beer Rating: ${brewery.beer_rating}`, collapsibleCard);
-    // collapsibleItem(`Comments: ${brewery.comments}`, collapsibleCard);
-    // const li = document.createElement('li');
-    // li.innerHTML = `h6>Website: <a href=${brewery.website}>${brewery.website}</a></h6>`;
-    // collapsibleCard.append(li);
-    // const li2 = document.createElement('li');
-    // li2.className = "collection-item right-align"
-    // li2.innerHTML = `<button id="edit-${brewery.id}" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</button>
-    // <a class="waves-effect waves-light btn modal-trigger" data-target="modal${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>`
-    // collapsibleCard.append(li2);
-    // const popMessage = createModal(brewery.id, brewery.id, `Remove ${brewery.name} from favorites?`)
-    // breweryCard.append(collapsibleCard);
+    const collapsibleCard = createCollapsibleCard(brewery.name, brewery.id, 'star');
+    collapsibleItem(`Type: ${brewery.type}`, collapsibleCard);
+    collapsibleItem(`Adress: ${brewery.address}` ,collapsibleCard);
+    collapsibleItem(`Food: ${brewery.food}`, collapsibleCard);
+    collapsibleItem(`Beer Rating: ${brewery.beer_rating}`, collapsibleCard);
+    collapsibleItem(`Comments: ${brewery.comments}`, collapsibleCard);
+    const li = document.createElement('li');
+    li.innerHTML = `h6>Website: <a href=${brewery.website}>${brewery.website}</a></h6>`;
+    collapsibleCard.append(li);
+    const li2 = document.createElement('li');
+    li2.className = "collection-item right-align"
+    li2.innerHTML = `<button id="edit-${brewery.id}" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</button>
+    <a class="waves-effect waves-light btn modal-trigger" data-target="modal${brewery.id}" ><i class="material-icons left">delete</i>Remove</a>`
+    collapsibleCard.append(li2);
+    const popMessage = createModal(brewery.id, brewery.id, `Remove ${brewery.name} from favorites?`)
+    breweryCard.append(collapsibleCard);
 
     
     
