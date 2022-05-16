@@ -196,4 +196,15 @@ GEOLOCATION
 
 
 
-    
+    const createButton = (text, id, image) => {
+    const btn = document.createElement('button');
+    btn.className = "waves-effect waves-light btn";
+    btn.innerText = text;
+    const i = document.createElement('i');
+    i.className = "material-icons left";
+    i.id = id;
+    i.innerText = image;
+    btn.append(i);
+
+    return btn;
+}
