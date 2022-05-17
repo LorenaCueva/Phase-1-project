@@ -195,6 +195,9 @@ GEOLOCATION
 // </ul>
 
 
+$stateLink.addEventListener('click',e => {createTabs();statePage(e.target.parentNode.firstChild.innerHTML)});
+
+
 
     const createButton = (text, id, image) => {
     const btn = document.createElement('button');

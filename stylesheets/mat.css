@@ -3,19 +3,39 @@
 } /*Black color to the text*/
 
 .tabs .tab a:hover {
-    background-color:#eee;
-    color:#000;
+    background-color:rgb(15, 121, 127);
+    color:white;
 } /*Text color on hover*/
 
 .tabs .tab a.active {
-    background-color:#888;
-    color:#000;
+    background-color:rgb(2, 95, 100);
+    color:white;
 } /*Background and text color when a tab is active*/
 
 .tabs .indicator {
-    background-color:#000;
+    background-color:rgb(48, 157, 162);
 } /*Color of underline*/
 
 .modal { 
    max-height: 100% !important 
+}
+
+body{
+    background-color:rgb(244, 242, 235);
+}
+
+ul.tabs{
+    background-color:rgb(244, 242, 235);
+}
+
+li.tab.col.s3{
+    background-color:rgb(142, 200, 203);
+}
+
+div.card-panel{
+    background-color:rgb(142, 200, 203);
+}
+
+ul.collection.left-align li.collection-item{
+    background-color:rgb(244, 242, 235);
 }
