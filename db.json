@@ -5,10 +5,10 @@
       "name": "7 Seas Brewing Co",
       "lookup_name": "7-seas-brewing-co-tacoma",
       "state": "Washington",
-      "beer_rating": "2",
-      "food": "No",
-      "pet_friendly": "Yes",
-      "comments": "Something something"
+      "beer_rating": "4",
+      "food": "Yes",
+      "pet_friendly": "No",
+      "comments": "Something"
     },
     {
       "id": 3,
@@ -28,8 +28,7 @@
       "beer_rating": "3",
       "food": "Yes",
       "pet_friendly": "Yes",
-      "comments": "Deliciously"
+      "comments": "Deliciously Hazy."
     }
-   
   ]
 }
