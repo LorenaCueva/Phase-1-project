@@ -57,6 +57,7 @@ const searchEvent = () => {
                     const noRes = document.createElement('h5');
                     noRes.innerText = "No Results";
                     mainDiv().append(noRes);
+                    resetFooter();
                     }
                 })})
     })
