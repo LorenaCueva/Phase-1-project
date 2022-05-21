@@ -211,3 +211,19 @@ $stateLink.addEventListener('click',e => {createTabs();statePage(e.target.parent
 
     return btn;
 }
+
+
+
+
+blog post
+
+
+-pit falls of  asynchronous code that modifies global state
+
+temporal dependency
+
+dataflow side efect free
+display basado en resultado del flow
+
+-global state
+-

@@ -1,16 +1,6 @@
 {
   "favorites": [
     {
-      "id": 1,
-      "name": "7 Seas Brewing Co",
-      "lookup_name": "7-seas-brewing-co-tacoma",
-      "state": "Washington",
-      "beer_rating": "5",
-      "food": "FoodTruck",
-      "pet_friendly": "No",
-      "comments": "Big Space. Different food vendors."
-    },
-    {
       "id": 3,
       "name": "Great Notion Brewing",
       "lookup_name": "great-notion-brewing-portland",
@@ -25,10 +15,10 @@
       "name": "Reuben's Brews Taproom",
       "lookup_name": "reubens-brews-taproom-seattle",
       "state": "Washington",
-      "beer_rating": "4",
-      "food": "FoodTruck",
+      "beer_rating": "3",
+      "food": "Yes",
       "pet_friendly": "Yes",
-      "comments": "Outside Space. Deliciously Hazy."
+      "comments": "Outside"
     },
     {
       "name": "Zilker Brewing Co",
@@ -39,6 +29,26 @@
       "beer_rating": "5",
       "comments": "Swag",
       "id": 5
+    },
+    {
+      "name": "101 Brewery",
+      "lookup_name": "101-brewery-quilcene",
+      "state": "Washington",
+      "food": "Yes",
+      "pet_friendly": "Yes",
+      "beer_rating": "3",
+      "comments": "ksjdfladfhug",
+      "id": 6
+    },
+    {
+      "name": "7 Seas Brewing Co",
+      "lookup_name": "7-seas-brewing-co-tacoma",
+      "state": "Washington",
+      "food": "Yes",
+      "pet_friendly": "Yes",
+      "beer_rating": "3",
+      "comments": "Good",
+      "id": 7
     }
   ]
 }

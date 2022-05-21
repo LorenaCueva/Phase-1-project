@@ -48,7 +48,12 @@ const searchEvent = () => {
         fetchFavoritesByName(searchValue)
         .then(breweries => {
             e.target.reset();
+
+
             if(breweries.length > 0) breweries.forEach(brewery => fillBreweryObject(brewery))
+
+
+
             setTimeout(console.log("done"),1000);
             searchBreweryByName(searchValue)
             .then(breweries => {
@@ -160,6 +165,8 @@ const confirmFavoriteEvent = (btn, brewery) => {
             elem.remove();
             document.getElementById(`card-${brewery.lookup_name}`).remove();
             resetMain();
+            resetTabs();
+            resetFooter();
             statePage(brewery.state);
             createTabs();      
             fixScrolling();
@@ -218,6 +225,7 @@ const confirmEditBtnEvent = (btn, brewery) => {
                 content.append(collapsibleItem(`Type: ${brewery.type}`));
                 content.append(collapsibleItem(`Adress: ${brewery.address}`));
                 content.append(collapsibleItem(`City: ${brewery.city}`));
+                content.append(collapsibleItem(`State: ${brewery.state}`));
                 content.append(collapsibleItem(`Website: <a href=${brewery.website}>${brewery.website}`));
                 content.append(collapsibleItem(`Food: ${object.food}`));
                 content.append(collapsibleItem(`Beer Rating: ${object.beer_rating}`));
@@ -229,7 +237,8 @@ const confirmEditBtnEvent = (btn, brewery) => {
                 console.log(elem);
                 M.Modal.getInstance(elem).destroy();
                 elem.remove();
-                editBtnEvent(editBtn(object.id), object);
+                editBtnEvent(editBtn(brewery.id), brewery);
+                console.log(object);
                 fixScrolling();
             })           
             
@@ -246,6 +255,7 @@ const cancelEditEvent = (btn, brewery) => {
             M.Modal.getInstance(elem).destroy();
             elem.remove();
             fixScrolling();
+            editBtnEvent(editBtn(brewery.id), brewery);
         }
     )
 }
@@ -380,6 +390,7 @@ const displayFavorite = (brewery) => {
     content.append(collapsibleItem(`Type: ${brewery.type}`));
     content.append(collapsibleItem(`Adress: ${brewery.address}`));
     content.append(collapsibleItem(`City: ${brewery.city}`));
+    content.append(collapsibleItem(`State: ${brewery.state}`));
     content.append(collapsibleItem(`Website: <a href=${brewery.website}>${brewery.website}`));
     content.append(collapsibleItem(`Food: ${brewery.food}`));
     content.append(collapsibleItem(`Beer Rating: ${brewery.beer_rating}`));
@@ -476,6 +487,7 @@ const fillBreweryObject = (brewery) => {
         lookup_name:"",
         type: "",
         address: "",
+        state:"",
         city:"",
         website:"",
         beer_rating:"",
@@ -485,6 +497,7 @@ const fillBreweryObject = (brewery) => {
     }
     breweryObject.id = brewery.id
     breweryObject.name = brewery.name;
+    breweryObject.state = brewery.state;
     breweryObject.lookup_name = brewery.lookup_name;
     breweryObject.beer_rating = brewery.beer_rating;
     breweryObject.food = brewery.food;
