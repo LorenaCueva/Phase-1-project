@@ -5,10 +5,10 @@
       "name": "7 Seas Brewing Co",
       "lookup_name": "7-seas-brewing-co-tacoma",
       "state": "Washington",
-      "beer_rating": "3",
-      "food": "Yes",
+      "beer_rating": "5",
+      "food": "FoodTruck",
       "pet_friendly": "No",
-      "comments": "Something"
+      "comments": "Big Space. Different food vendors."
     },
     {
       "id": 3,
@@ -25,10 +25,20 @@
       "name": "Reuben's Brews Taproom",
       "lookup_name": "reubens-brews-taproom-seattle",
       "state": "Washington",
-      "beer_rating": "3",
-      "food": "Yes",
+      "beer_rating": "4",
+      "food": "FoodTruck",
       "pet_friendly": "Yes",
-      "comments": "Delicious"
+      "comments": "Outside Space. Deliciously Hazy."
+    },
+    {
+      "name": "Zilker Brewing Co",
+      "lookup_name": "zilker-brewing-co-austin",
+      "state": "Texas",
+      "food": "FoodTruck",
+      "pet_friendly": "Yes",
+      "beer_rating": "5",
+      "comments": "Swag",
+      "id": 5
     }
   ]
 }

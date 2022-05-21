@@ -28,7 +28,7 @@ const mapLinkClickEvent = () => {
          favorites = [];
          resetTabs();
          resetFooter();
-         title().innerText = "Where to brew?";
+         title().innerText = "Where to Brew?";
          mapVisible(true);
         });
 }
@@ -52,7 +52,8 @@ const searchEvent = () => {
             setTimeout(console.log("done"),1000);
             searchBreweryByName(searchValue)
             .then(breweries => {
-                if(breweries.length > 0) breweries.forEach(brewery => displayBrewery(brewery))
+                if(breweries.length > 0) {
+                    breweries.forEach(brewery => displayBrewery(brewery))}
                 else {
                     const noRes = document.createElement('h5');
                     noRes.innerText = "No Results";
@@ -122,14 +123,13 @@ const PageBtnEvent = (nextBtn, backBtn,) => {
     })   
 }
 
-///check images modify-event
 
 const favoriteEvent = (brewery) => {
     document.getElementById(`make-favorite-${brewery.name}`).addEventListener('mouseenter', e=> {
-        e.target.src = "img/1.jpeg";
+        e.target.src = "img/fav1.png";
     })
     document.getElementById(`make-favorite-${brewery.name}`).addEventListener('mouseout', e=> {
-        e.target.src = "img/2.jpeg";
+        e.target.src = "img/fav2.png";
     })
     document.getElementById(`make-favorite-${brewery.name}`).addEventListener('click', e=> {
         rateModal(brewery);
@@ -159,6 +159,9 @@ const confirmFavoriteEvent = (btn, brewery) => {
             M.Modal.getInstance(elem).destroy();
             elem.remove();
             document.getElementById(`card-${brewery.lookup_name}`).remove();
+            resetMain();
+            statePage(brewery.state);
+            createTabs();      
             fixScrolling();
         })
 
@@ -194,7 +197,6 @@ const editBtnEvent = (btn, brewery) => {
         rateModal(brewery);
 
         confirmEditBtnEvent(document.getElementById(`confirm-edit-${brewery.id}`), brewery);
-        // editBtnEvent(editBtn(brewery.id), brewery);
 
         btn.removeEventListener('click', createEditWindow, true);
 
@@ -355,7 +357,6 @@ const createModal = (modalId, yesBtnId, yesBtnName, noBtnId, noBtnName, contentI
 }
 
 
-
 const createFormSelect = (sId, sName, options, label) => {
     const select = document.createElement('select');
     select.id = sId;
@@ -452,7 +453,7 @@ const displayBrewery = (brewery) => {
 
         const favImg = document.createElement('img');
         favImg.id = `make-favorite-${brewery.name}`;
-        favImg.src = "img/2.jpeg";
+        favImg.src = "img/fav2.png";
 
         imgDiv.append(favImg);
 
