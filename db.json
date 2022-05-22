@@ -15,10 +15,10 @@
       "name": "Reuben's Brews Taproom",
       "lookup_name": "reubens-brews-taproom-seattle",
       "state": "Washington",
-      "beer_rating": "3",
-      "food": "Yes",
+      "beer_rating": "5",
+      "food": "FoodTruck",
       "pet_friendly": "Yes",
-      "comments": "Outside"
+      "comments": "Outside space. Delicious Hazys."
     },
     {
       "name": "Zilker Brewing Co",
@@ -31,24 +31,14 @@
       "id": 5
     },
     {
-      "name": "101 Brewery",
-      "lookup_name": "101-brewery-quilcene",
-      "state": "Washington",
-      "food": "Yes",
-      "pet_friendly": "Yes",
-      "beer_rating": "3",
-      "comments": "ksjdfladfhug",
-      "id": 6
-    },
-    {
       "name": "7 Seas Brewing Co",
       "lookup_name": "7-seas-brewing-co-tacoma",
       "state": "Washington",
-      "food": "Yes",
-      "pet_friendly": "Yes",
-      "beer_rating": "3",
-      "comments": "Good",
-      "id": 7
+      "food": "FoodTruck",
+      "pet_friendly": "No",
+      "beer_rating": "5",
+      "comments": "Huge inside space. Different food vendors.",
+      "id": 6
     }
   ]
 }

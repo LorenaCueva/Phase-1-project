@@ -49,23 +49,24 @@ const searchEvent = () => {
         .then(breweries => {
             e.target.reset();
 
+            Promise.all(breweries.map(b => fillBreweryObject(b))).then(filled_breweries => {
+                for (let brewery of filled_breweries) {
+                    favorites.push(brewery.name);
+                    displayFavorite(brewery);
+                }
 
-            if(breweries.length > 0) breweries.forEach(brewery => fillBreweryObject(brewery))
-
-
-
-            setTimeout(console.log("done"),1000);
-            searchBreweryByName(searchValue)
-            .then(breweries => {
-                if(breweries.length > 0) {
-                    breweries.forEach(brewery => displayBrewery(brewery))}
-                else {
-                    const noRes = document.createElement('h5');
-                    noRes.innerText = "No Results";
-                    mainDiv().append(noRes);
-                    resetFooter();
+                searchBreweryByName(searchValue)
+                .then(breweries => {
+                    if (breweries.length === 0) {
+                        const noRes = document.createElement('h5');
+                        noRes.innerText = "No Results";
+                        mainDiv().append(noRes);
+                        resetFooter();
+                    } else {
+                        breweries.forEach(brewery => displayBrewery(brewery));
                     }
-                })})
+                })});
+            });
     })
 }
 
@@ -234,13 +235,13 @@ const confirmEditBtnEvent = (btn, brewery) => {
 
 
                 const elem = edModal(brewery.id);
-                console.log(elem);
                 M.Modal.getInstance(elem).destroy();
                 elem.remove();
-                editBtnEvent(editBtn(brewery.id), brewery);
-                console.log(object);
-                fixScrolling();
-            })           
+                fillBreweryObject(object)
+                .then(b => {
+                    editBtnEvent(editBtn(b.id), b);
+                    fixScrolling();})
+                })           
             
         }
         else window.alert("Please fill all areas")
@@ -504,15 +505,14 @@ const fillBreweryObject = (brewery) => {
     breweryObject.pet_friendly = brewery.pet_friendly;
     breweryObject.comments = brewery.comments;
 
-    favorites.push(brewery.name);
-
-    fetchBreweryByName(brewery.lookup_name)
+    return fetchBreweryByName(brewery.lookup_name)
     .then(brewery => {
         breweryObject.type = brewery.brewery_type;
         breweryObject.address = brewery.street;
         breweryObject.city = brewery.city
         breweryObject.website = brewery.website_url
-       displayFavorite(breweryObject)})
+        return breweryObject;
+    });
 }
 
 
@@ -639,15 +639,19 @@ const statePage = (state) => {
     
    fetchFavoritesByState(state)
    .then(breweries => {
-    if(breweries.length === 0){
-        const noFav = document.createElement('h5');
-        noFav.innerText = "No favorites Yet"
-        mainDiv().append(noFav);
-    }
-    else{
-        breweries.forEach(brewery => fillBreweryObject(brewery))
-}})
-  
+        if(breweries.length === 0){
+            const noFav = document.createElement('h5');
+            noFav.innerText = "No favorites Yet"
+            mainDiv().append(noFav);
+        }
+        else{
+            Promise.all(breweries.map(b => fillBreweryObject(b))).then(filled_breweries => {
+                for (let brewery of filled_breweries) {
+                    displayFavorite(brewery);
+                }
+            });
+        }
+    });
 }
 
 

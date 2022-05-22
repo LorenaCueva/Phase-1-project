@@ -6,9 +6,9 @@ Application to keep track of favorite breweries an brew pubs by state. Will be a
 
 ## Features
 Use clickable map from https://clickablemapmaker.com/ to determine the state
-Display list of favorites in the area
+Display list of breweries in the area
+Mark brewery as favorite
 Edit/remove favorites
-Add a new favorite brewery
 
 ## To do
 1. Nav bar
@@ -226,4 +226,11 @@ dataflow side efect free
 display basado en resultado del flow
 
 -global state
+
+timneout 
+promise modificaba objeto no conectado a la funcion de desplegar
+arreglado
+
+relying side effects de la funciones modificando shared state
+en lugar de modelar flujo input output side effect free
 -

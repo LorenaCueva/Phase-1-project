@@ -30,10 +30,3 @@ https://clickablemapmaker.com/
 https://www.dreamstime.com/
 https://www.canva.com/
 
-
-
-
-
-``````
-Code format
-```````
