@@ -147,33 +147,33 @@ const favoriteEvent = (brewery) => {
 const confirmFavoriteEvent = (btn, brewery) => {
     btn.addEventListener('click', e=> {
         const form  = document.getElementById(`form${brewery.id}`);
-    if(form.food.value !== " " && form.pet.value !== " " && form.rating.value !== " "){
+        if(form.food.value !== " " && form.pet.value !== " " && form.rating.value !== " "){
 
-        const breweryObject = {
-            name: brewery.name,
-            lookup_name: brewery.id,
-            state: brewery.state,
-            beer_rating: form.rating.value,
-            food:form.food.value,
-            pet_friendly:form.pet.value,
-            comments: form.comments.value
-        }
-        makeFavorite(breweryObject)
-        .then(brewery => {
-            console.log(brewery);
-            const elem = edModal(brewery.lookup_name);
-            M.Modal.getInstance(elem).destroy();
-            elem.remove();
-            document.getElementById(`card-${brewery.lookup_name}`).remove();
-            resetMain();
-            resetTabs();
-            resetFooter();
-            statePage(brewery.state);
-            createTabs();      
-            fixScrolling();
-        })
+            const breweryObject = {
+                name: brewery.name,
+                lookup_name: brewery.id,
+                state: brewery.state,
+                beer_rating: form.rating.value,
+                food:form.food.value,
+                pet_friendly:form.pet.value,
+                comments: form.comments.value
+            }
+            makeFavorite(breweryObject)
+            .then(brewery => {
+                console.log(brewery);
+                const elem = edModal(brewery.lookup_name);
+                M.Modal.getInstance(elem).destroy();
+                elem.remove();
+                document.getElementById(`card-${brewery.lookup_name}`).remove();
+                resetMain();
+                resetTabs();
+                resetFooter();
+                statePage(brewery.state);
+                createTabs();      
+                fixScrolling();
+            })
 
-    } else window.alert("Please Fill All Areas");
+        } else window.alert("Please Fill All Areas");
     })
 }
 
@@ -252,11 +252,11 @@ const confirmEditBtnEvent = (btn, brewery) => {
 const cancelEditEvent = (btn, brewery) => {
     btn.addEventListener('click', e => {
         e.preventDefault();
-            var elem = edModal(brewery.id);
-            M.Modal.getInstance(elem).destroy();
-            elem.remove();
-            fixScrolling();
-            editBtnEvent(editBtn(brewery.id), brewery);
+        var elem = edModal(brewery.id);
+        M.Modal.getInstance(elem).destroy();
+        elem.remove();
+        fixScrolling();
+        editBtnEvent(editBtn(brewery.id), brewery);
         }
     )
 }
@@ -465,6 +465,7 @@ const displayBrewery = (brewery) => {
 
         const favImg = document.createElement('img');
         favImg.id = `make-favorite-${brewery.name}`;
+        favImg.alt = `Make Favorite`
         favImg.src = "img/fav2.png";
 
         imgDiv.append(favImg);
