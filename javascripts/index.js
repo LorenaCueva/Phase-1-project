@@ -195,20 +195,17 @@ const deleteButtonEvent = (btn, brewery) => {
         initializeComponents();
         M.Modal.getInstance(delModal(brewery.id)).open();
         confirmDeleteEvent(delBtn(brewery.id));
-        cancelDeleteEvent(cancelDeleteBtn(brewery.id),brewery.id);
+        cancelDeleteEvent(cancelDeleteBtn(brewery.id),brewery);
     })
 }
 
 const editBtnEvent = (btn, brewery) => {
-    btn.addEventListener('click', function createEditWindow(e) {
+    btn.addEventListener('click', e=> {
     
         rateModal(brewery);
-
         confirmEditBtnEvent(document.getElementById(`confirm-edit-${brewery.id}`), brewery);
 
-        btn.removeEventListener('click', createEditWindow, true);
-
-    }, true)
+    })
 }
 
 const confirmEditBtnEvent = (btn, brewery) => {
@@ -239,12 +236,14 @@ const confirmEditBtnEvent = (btn, brewery) => {
                 elem.remove();
                 fillBreweryObject(object)
                 .then(b => {
+                    editBtn(b.id).remove();
+                    const newBtn = createButton("Edit", `edit-btn-${brewery.id}`, "edit");
+                    document.getElementById(`btns-${brewery.id}`).prepend(newBtn);
                     editBtnEvent(editBtn(b.id), b);
                     fixScrolling();})
                 })           
-            
         }
-        else window.alert("Please fill all areas")
+        else window.alert("Please fill all areas");
         
     })
 }
@@ -252,18 +251,17 @@ const confirmEditBtnEvent = (btn, brewery) => {
 const cancelEditEvent = (btn, brewery) => {
     btn.addEventListener('click', e => {
         e.preventDefault();
-        var elem = edModal(brewery.id);
+        let elem = edModal(brewery.id);
         M.Modal.getInstance(elem).destroy();
         elem.remove();
         fixScrolling();
-        editBtnEvent(editBtn(brewery.id), brewery);
         }
     )
 }
 
-const cancelDeleteEvent = (btn, id) => {
+const cancelDeleteEvent = (btn, brewery) => {
     btn.addEventListener('click', e=>{
-        var elem = delModal(id);
+        let elem = delModal(brewery.id);
         M.Modal.getInstance(elem).destroy();
         elem.remove();
         fixScrolling();
@@ -316,6 +314,7 @@ const createCollapsibleCard = (brewery, icon) => {
     ul2.id= `brewery-content-${brewery.id}`;
 
     const btns = document.createElement('li');
+    btns.id = `btns-${brewery.id}`;
     btns.className = "collection-item right-align";
     const delBtn = createButton("Remove", `delete-btn-${brewery.id}`, "delete");
     const editBtn = createButton("Edit", `edit-btn-${brewery.id}`, "edit");
@@ -433,6 +432,7 @@ const rateModal = (brewery) => {
     M.Modal.getInstance(edModal(brewery.id)).open();
 
     cancelEditEvent(cancelEditBtn(brewery.id), brewery);
+    
 }
 
 const displayBrewery = (brewery) => {
