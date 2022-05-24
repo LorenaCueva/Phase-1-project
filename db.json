@@ -1,0 +1,44 @@
+{
+  "favorites": [
+    {
+      "id": 3,
+      "name": "Great Notion Brewing",
+      "lookup_name": "great-notion-brewing-portland",
+      "state": "Oregon",
+      "beer_rating": "4",
+      "food": "No",
+      "pet_friendly": "Yes",
+      "comments": "Beer menu changes quickly. Sometimes is a miss, sometimes is amazing, but it's always a good time."
+    },
+    {
+      "id": 4,
+      "name": "Reuben's Brews Taproom",
+      "lookup_name": "reubens-brews-taproom-seattle",
+      "state": "Washington",
+      "beer_rating": "5",
+      "food": "Yes",
+      "pet_friendly": "Yes",
+      "comments": "Outside space. Deliciously Hazy."
+    },
+    {
+      "name": "Zilker Brewing Co",
+      "lookup_name": "zilker-brewing-co-austin",
+      "state": "Texas",
+      "food": "FoodTruck",
+      "pet_friendly": "Yes",
+      "beer_rating": "5",
+      "comments": "Swag",
+      "id": 5
+    },
+    {
+      "name": "7 Seas Brewing Co",
+      "lookup_name": "7-seas-brewing-co-tacoma",
+      "state": "Washington",
+      "food": "FoodTruck",
+      "pet_friendly": "No",
+      "beer_rating": "5",
+      "comments": "Huge inside space. Different food vendors.",
+      "id": 6
+    }
+  ]
+}
