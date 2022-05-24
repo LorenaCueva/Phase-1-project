@@ -30,3 +30,5 @@ https://clickablemapmaker.com/
 https://www.dreamstime.com/
 https://www.canva.com/
 
+## BLOG POST
+https://medium.com/@lorenacueva/pitfalls-of-asynchronous-code-that-modifies-shared-state-711c236d4b98

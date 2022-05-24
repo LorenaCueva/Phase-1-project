@@ -48,7 +48,6 @@ const searchEvent = () => {
         fetchFavoritesByName(searchValue)
         .then(breweries => {
             e.target.reset();
-
             Promise.all(breweries.map(b => fillBreweryObject(b))).then(filled_breweries => {
                 for (let brewery of filled_breweries) {
                     favorites.push(brewery.name);
@@ -160,7 +159,6 @@ const confirmFavoriteEvent = (btn, brewery) => {
             }
             makeFavorite(breweryObject)
             .then(brewery => {
-                console.log(brewery);
                 const elem = edModal(brewery.lookup_name);
                 M.Modal.getInstance(elem).destroy();
                 elem.remove();
@@ -526,7 +524,7 @@ const fetchFavoritesByState = (state) => {
 }
 
 const fetchFavoritesByName = (name) => {
-    return fetch(`http://localhost:3000/favorites?q=${name}`)
+    return fetch(`http://localhost:3000/favorites?name_like=${name}`)
     .then(response => response.json())
     .catch(error => window.alert(error.message));
 }
