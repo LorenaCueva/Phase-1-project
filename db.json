@@ -29,6 +29,16 @@
       "beer_rating": "5",
       "comments": "Huge inside space. Different food vendors.",
       "id": 6
+    },
+    {
+      "name": "101 Brewery",
+      "lookup_name": "101-brewery-quilcene",
+      "state": "Washington",
+      "food": "Yes",
+      "pet_friendly": "Yes",
+      "beer_rating": "3",
+      "comments": "sdckfjlDSJhf",
+      "id": 7
     }
   ]
 }
